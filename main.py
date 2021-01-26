@@ -94,6 +94,7 @@ def win_check(board,mark):
 # the game
 
 print('Welcome to Tic Tac Toe!')
+print('created by Deepanshu Tiwari')
 
 while True:
     # Reset the board
