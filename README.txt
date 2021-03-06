@@ -4,6 +4,6 @@ Go to the directory where you have your game.
 Type cd and followed by your directory  to get into it
 After you are in the right directory, type the following command to run the game:-
 Python main.py
+If you not have python installed in your device you can use tictactoe.exe to play the game
 
-if you not have python installed in your device you can use tictactoe.exe to play the game
 Now have fun!
