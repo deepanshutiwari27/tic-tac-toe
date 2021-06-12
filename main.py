@@ -234,6 +234,8 @@ while True:
         multiplayer = int(input('do you want to play against human player or computer:(for human player enter 1 for computer player enter 2) '))
 
     if multiplayer==1:
+        play_game = input('Are you ready to play? Enter Yes or No.')
+    	game_on = True
         player1_marker, player2_marker = player_input()
         turn = choose_first()
         print(turn + ' will go first.')
@@ -281,6 +283,7 @@ while True:
         level = int(input('Which level you want to play (1,2,3) '))
         player1_marker, player2_marker = player_input()
         turn = choose_first()
+        game_on = True
         print(turn + ' will go first.')
         while game_on:        
             if level == 1:
