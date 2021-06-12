@@ -143,12 +143,67 @@ def level2():
     if len(edgesopen) > 0:
         move = select_random(edgesopen)
 
-    return move       
+    return move
+
+
+def num_of_empty_spaces(board):
+	possiblemoves = []
+	for j in [1,2,3,4,5,6,7,8,9]:
+		if space_check(board, j):
+			possiblemoves.append(j)
+
+	return len(possiblemoves)
+
 
 # put_O_or_X_func
  
 def place_marker(board, marker, position):
     board[position] = marker
+
+def minimax(player,board):
+	maxplayer = player2_marker
+	other_player = player1_marker if player == player2_marker else player2_marker
+
+	if win_check(board, other_player):
+		return {"position":None, "score":1*( num_of_empty_spaces(board)+1 ) if other_player == maxplayer else -1*( num_of_empty_spaces(board)+1 ) }
+
+	elif num_of_empty_spaces(board) == 0:
+		return {"position":None, "score":0}
+
+	if player == maxplayer:
+		best = {"position":None, "score":-math.inf}
+
+	else:
+		best = {"position":None, "score":math.inf}
+
+	possiblemoves = []
+	for i in [1,2,3,4,5,6,7,8,9]:
+		if space_check(board,i):
+			possiblemoves.append(i)
+
+	for i in possiblemoves:
+		place_marker(board,player,i)
+		sim_score = minimax(other_player,board)
+		board[i]=' '
+		sim_score["position"]=i
+
+		if player==maxplayer:
+			if sim_score["score"] > best["score"]:
+				best = sim_score
+
+		else:
+			if sim_score["score"] < best["score"]:
+				best = sim_score
+
+	return best
+
+def level3(board):
+	if num_of_empty_spaces(board)==9:
+		move = 1
+		return move
+	else:
+		best_move = minimax(player2_marker, board)
+		return best_move["position"]
 
 # Win_func
 
@@ -229,17 +284,10 @@ while True:
                         turn = 'Player 1' 
 
     if multiplayer == 2:
-        level = int(input('Which level you want to play (1,2) '))
+        level = int(input('Which level you want to play (1,2,3) '))
         player1_marker, player2_marker = player_input()
         turn = choose_first()
         print(turn + ' will go first.')
-        play_game = input('Are you ready to play? Enter Yes or No.')
-
-        if play_game.lower() == 'yes':
-            game_on = True
-        else:
-            game_on = False
-
         while game_on:        
             if level == 1:
                 #player1 turn
@@ -313,6 +361,46 @@ while True:
                             break
                         else:
                             turn = 'Player 1'  
+
+            if level == 3:
+
+                #player1 turn
+
+                if turn == 'Player 1':                
+                    display_board(theBoard)
+                    position = player_choice(theBoard)
+                    place_marker(theBoard, player1_marker, position)
+
+                    if win_check(theBoard, player1_marker):
+                        display_board(theBoard)
+                        print('Congratulations! you won the game!')
+                        game_on = False
+                    else:
+                        if full_board_check(theBoard):
+                            display_board(theBoard)
+                            print('The game is a draw!')
+                            break
+                        else:
+                            turn = 'Player 2'
+
+                else:
+                    display_board(theBoard)
+                    position = level3(theBoard)
+                    place_marker(theBoard, player2_marker, position)
+
+                    if win_check(theBoard, player2_marker):
+                        display_board(theBoard)
+                        print('Sorry Computer won the game')
+                        game_on = False
+                    else:
+                        if full_board_check(theBoard):
+                            display_board(theBoard)
+                            print('The game is draw!')
+                            break
+                        else:
+                            turn = 'Player 1'  
+
+
 
     if not replay():
         break
