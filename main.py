@@ -235,7 +235,7 @@ while True:
 
     if multiplayer==1:
         play_game = input('Are you ready to play? Enter Yes or No.')
-    	game_on = True
+        game_on = True
         player1_marker, player2_marker = player_input()
         turn = choose_first()
         print(turn + ' will go first.')
