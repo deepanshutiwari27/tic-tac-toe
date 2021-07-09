@@ -21,3 +21,5 @@ Python main.py
 If you don't have python installed on your device you can use tictactoe.exe
 
 NOW HAVE FUN!
+
+If you like my work just give me a star!
